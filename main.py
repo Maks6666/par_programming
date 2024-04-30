@@ -1,16 +1,28 @@
-# This is a sample Python script.
+# Користувач вводить з клавіатури значення у список.
+# Після чого запускаються два потоки.
+# Перший потік знаходить максимум у списку. Другий потік знаходить мінімум
+# у списку. Результати обчислень виведіть на екран.
 
-# Press ⌃R to execute it or replace it with your code.
-# Press Double ⇧ to search everywhere for classes, files, tool windows, actions, and settings.
+import threading
+
+def maximum(lst):
+    print(max(lst))
+
+def minimum(lst):
+    print(min(lst))
+
+def create_list(num):
+    lst = []
+    for i in range(num):
+        number = int(input(f"Input {i+1}st number: "))
+        lst.append(number)
+    t1 = threading.Thread(target=maximum, args=(lst,))
+    t2 = threading.Thread(target=minimum, args=(lst,))
+
+    t1.start()
+    t2.start()
+
+    return t1, t2
 
 
-def print_hi(name):
-    # Use a breakpoint in the code line below to debug your script.
-    print(f'Hi, {name}')  # Press ⌘F8 to toggle the breakpoint.
-
-
-# Press the green button in the gutter to run the script.
-if __name__ == '__main__':
-    print_hi('PyCharm')
-
-# See PyCharm help at https://www.jetbrains.com/help/pycharm/
+print(create_list(4))
